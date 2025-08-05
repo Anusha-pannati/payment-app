@@ -1,7 +1,8 @@
 import GoogleProvider from "next-auth/providers/google";
 import db from "@repo/db/client";
+import { NextAuthOptions } from "next-auth";
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID || "",
@@ -9,15 +10,13 @@ export const authOptions = {
         })
     ],
     callbacks: {
-      async signIn({ user, account }: {
-        user: {
-          email: string;
-          name: string
-        },
-        account: {
-          provider: "google" | "github"
-        }
-      }) {
+       async signIn({
+      user,
+      account,
+    }: {
+      user: any;
+      account: any;
+    }): Promise<boolean> {
         console.log("hi signin")
         if (!user || !user.email) {
           return false;
